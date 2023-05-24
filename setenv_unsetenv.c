@@ -82,7 +82,7 @@ char *readln()
     if (string == NULL)
 	{
 		write(STDOUT_FILENO, "\n", 1);
-		free(line);
+		free(string);
 		exit(-1);
 	}
     /* get rid of new line char and replace it with the terminating null*/
@@ -711,7 +711,10 @@ int _setenv(char *name, char *value, list_t **head)
     int node_index;
     
     if (name == NULL || value == NULL)
+    {
+        perror("Setenv");
         return (-1);
+    }
     /* if name does not exist */
     node_index = check_name(name);
     env_var = concatenate(name, value, "=");
@@ -782,6 +785,11 @@ int _unsetenv(char *name, list_t **head)
 {
     int node_index;
     
+    if (name == NULL)
+    {
+        perror("Unsetenv");
+        return (-1);
+    }
     node_index = check_name(name);
     if (node_index > 0)
     {
