@@ -77,8 +77,14 @@ char *readln()
         /*perror("getline");*/
         free_them_all("sd", 1, 1, string, environ);
         free_list(head);
-        exit(EXIT_FAILURE);
+        exit(0);
     }
+    if (string == NULL)
+	{
+		write(STDOUT_FILENO, "\n", 1);
+		free(line);
+		exit(-1);
+	}
     /* get rid of new line char and replace it with the terminating null*/
     string[chars_read - 1] = '\0';
     return (string);
