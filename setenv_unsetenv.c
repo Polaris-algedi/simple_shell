@@ -39,6 +39,7 @@ int _strlen(char *s);
 char *_strdup(char *str);
 char *_strcpy(char *dest, char *src);
 int _strcmp(char *s1, char *s2);
+void ignore_comment(char *line);
 
 
 
@@ -82,7 +83,7 @@ char *readln()
     if (string == NULL)
 	{
 		write(STDOUT_FILENO, "\n", 1);
-		free(line);
+		free(string);
 		exit(-1);
 	}
     /* get rid of new line char and replace it with the terminating null*/
@@ -148,11 +149,13 @@ void shell(char **av)
         if (isatty(STDIN_FILENO))
                 print_prompt();
 
+
         /* read line */
         /* when i pass line as a prameter to readln nothing works,
         but when i return a string and save it in it, it works ????*/
         line = readln();
 
+	ignore_comment(line);
         /* parse it */
         commands = split(line, " ");
 
@@ -711,7 +714,10 @@ int _setenv(char *name, char *value, list_t **head)
     int node_index;
     
     if (name == NULL || value == NULL)
+    {
+        perror("Setenv");
         return (-1);
+    }
     /* if name does not exist */
     node_index = check_name(name);
     env_var = concatenate(name, value, "=");
@@ -782,6 +788,11 @@ int _unsetenv(char *name, list_t **head)
 {
     int node_index;
     
+    if (name == NULL)
+    {
+        perror("Unsetenv");
+        return (-1);
+    }
     node_index = check_name(name);
     if (node_index > 0)
     {
@@ -889,4 +900,15 @@ char *_strdup(char *str)
 	for (i = 0; i <= len; i++)
 		s[i] = str[i];
 	return (s);
+}
+
+void ignore_comment(char *line)
+{
+    int i;
+    
+    for (i = 0; line[i] != '\0'; i++)
+    {
+        if (line[i] == '#')
+            line[i] = '\0';
+    }
 }
