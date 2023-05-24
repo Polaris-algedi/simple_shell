@@ -39,6 +39,7 @@ int _strlen(char *s);
 char *_strdup(char *str);
 char *_strcpy(char *dest, char *src);
 int _strcmp(char *s1, char *s2);
+void ignore_comment(char *line);
 
 
 
@@ -148,11 +149,13 @@ void shell(char **av)
         if (isatty(STDIN_FILENO))
                 print_prompt();
 
+
         /* read line */
         /* when i pass line as a prameter to readln nothing works,
         but when i return a string and save it in it, it works ????*/
         line = readln();
 
+	ignore_comment(line);
         /* parse it */
         commands = split(line, " ");
 
@@ -897,4 +900,15 @@ char *_strdup(char *str)
 	for (i = 0; i <= len; i++)
 		s[i] = str[i];
 	return (s);
+}
+
+void ignore_comment(char *line)
+{
+    int i;
+    
+    for (i = 0; line[i] != '\0'; i++)
+    {
+        if (line[i] == '#')
+            line[i] = '\0';
+    }
 }
