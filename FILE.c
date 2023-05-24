@@ -294,7 +294,21 @@ while (*str2 != '\0')
 *dest = '\0';
 return (start);
 }
+/**
+ * ignore_comment - handle  comments strating with #
+ *  @line: input string
+ * Return: Nothing 
+*/
+void ignore_comment(char *line)
+{
+int i;
 
+for (i = 0; line[i] != '\0'; i++)
+{
+if (line[i] == '#')
+line[i] = '\0';
+}
+}
 /**
  * filter - filter the command
  * @command: the command.
