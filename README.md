@@ -40,3 +40,8 @@ total 140
 -rwxr-xr-x 1 root root 26904 May 23 14:47 a.out
 -rw-r--r-- 1 root root   139 May 24 09:58 AUTHORS
 -rw-r--r-- 1 root root 16968 May 20 16:18 FILE.c
+### *Exit*
+to exit the shell, type `exit`  
+```
+$ exit
+thank you for using our shell ^_^
