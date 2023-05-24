@@ -2,6 +2,41 @@
 char *string, *line;
 list_t *head;
 /**
+ * print_prompt - print the shell prompt
+ * Return: Nothing
+*/
+void print_prompt(void)
+{
+if (write(STDOUT_FILENO, "$ ", 2) < 0)
+exit(EXIT_FAILURE);
+}
+/**
+ * readln - gets line from input stream
+ * Return: pointer to .
+*/
+char *readln(void)
+{
+size_t buffer = 0;
+ssize_t chars_read;
+string = NULL;
+chars_read = getline(&string, &buffer, stdin);
+if (chars_read == EOF)
+{
+        free_them_all("sd", 1, 1, string, environ);
+        free_list(head);
+        exit(0);
+}
+if (string == NULL)
+{
+                write(STDOUT_FILENO, "\n", 1);
+                free(line);
+                exit(-1);
+}
+string[chars_read - 1] = '\0';
+return (string);
+}
+
+/**
  * free_all_at_once - free everything allocated
  * Return: Nothing
  */
