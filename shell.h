@@ -26,16 +26,14 @@ char *env_var;
 struct list_t *next;
 } list_t;
 
+void shell(char **av);
 void print_prompt(void);
 char *readln(void);
 char **split(char *string, char *delim);
+void execute(char **commands);
 void free_them_all(const char *fmt, CU_int  n, CU_int m, ...);
 void ignore_comment(char *line);
-void execute(char **commands);
 void sig_handler(__attribute__((unused)) int num);
-char *readln(void);
-char **split(char *string, char *delim);
-void shell(char **av);
 char *_getenv(char *name);
 char *concatenate(char *str1, char *str2, char *delim);
 int filter(char *command);
