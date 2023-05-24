@@ -288,13 +288,9 @@ int filter(char *command)
     for (i = 0; command[i] != '\0'; i++)
     {
         if (command[i] == '/')
-        {
-            printf("slash found\n");
             return (1);
-        }
             
     }
-    printf("slash not found\n");
     return (0);
 }
 
