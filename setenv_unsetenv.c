@@ -39,7 +39,7 @@ int _strlen(char *s);
 char *_strdup(char *str);
 char *_strcpy(char *dest, char *src);
 int _strcmp(char *s1, char *s2);
-void ignore_comment(char *line);
+/*void ignore_comment(char *line);*/
 
 
 
@@ -155,7 +155,7 @@ void shell(char **av)
         but when i return a string and save it in it, it works ????*/
         line = readln();
 
-	ignore_comment(line);
+	/*ignore_comment(line);*/
         /* parse it */
         commands = split(line, " ");
 
@@ -902,7 +902,7 @@ char *_strdup(char *str)
 	return (s);
 }
 
-void ignore_comment(char *line)
+/*void ignore_comment(char *line)
 {
     int i;
     
@@ -911,4 +911,4 @@ void ignore_comment(char *line)
         if (line[i] == '#')
             line[i] = '\0';
     }
-}
+}*/
