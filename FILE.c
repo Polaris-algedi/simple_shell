@@ -35,54 +35,6 @@ if (string == NULL)
 string[chars_read - 1] = '\0';
 return (string);
 }
-
-/**
- * free_all_at_once - free everything allocated
- * Return: Nothing
- */
-void free_all_at_once(void)
-{
-free_them_all("sd", 1, 1, string, environ);
-free_list(head);
-write(STDOUT_FILENO, "\n", 1);
-exit(0);
-}
-
-/**
- * sig_handler - handle signal
- * Return: Nothing
- */
-void sig_handler(__attribute__((unused)) int num)
-{
-free_all_at_once();
-}
-
-/**
- * readln - gets line from input stream
- * Return: pointer to .
-*/
-char *readln(void)
-{
-size_t buffer = 0;
-ssize_t chars_read;
-string = NULL;
-chars_read = getline(&string, &buffer, stdin);
-if (chars_read == EOF)
-{
-	free_them_all("sd", 1, 1, string, environ);
-	free_list(head);
-	exit(0);
-}
-if (string == NULL)
-{
-		write(STDOUT_FILENO, "\n", 1);
-		free(line);
-		exit(-1);
-}
-string[chars_read - 1] = '\0';
-return (string);
-}
-
 /**
  * split - creates token after getting a line
  * @string: the string to parse
@@ -120,13 +72,60 @@ return (str_array);
 }
 
 /**
- * print_prompt - print the shell prompt
+ * sig_handler - handle signal
  * Return: Nothing
-*/
-void print_prompt(void)
+ */
+void sig_handler(__attribute__((unused)) int num)
 {
-if (write(STDOUT_FILENO, "$ ", 2) < 0)
+free_all_at_once();
+}
+/**
+ * free_all_at_once - free everything allocated
+ * Return: Nothing
+ */
+void free_all_at_once(void)
+{
+free_them_all("sd", 1, 1, string, environ);
+free_list(head);
+write(STDOUT_FILENO, "\n", 1);
+exit(0);
+}
+
+
+/**
+ * split - creates token after getting a line
+ * @string: the string to parse
+ * @delim: delimiter
+ * Return: array of string
+*/
+char **split(char *string, char *delim)
+{
+char **str_array;
+char *token, *str_copy;
+size_t i, nbr_words = 0;
+
+str_copy = _strdup(string);
+token = strtok(str_copy, delim);
+for (i = 1; token != NULL; i++)
+{token = strtok(NULL, delim);
+}
+
+free(str_copy);
+nbr_words = i;
+str_array = malloc(sizeof(char *) * nbr_words);
+if (str_array == NULL)
+{
+perror("malloc");
 exit(EXIT_FAILURE);
+}
+token = strtok(string, delim);
+for (i = 0; token != NULL; i++)
+{
+str_array[i] = token;
+token = strtok(NULL, delim);
+}
+str_array[i] = NULL;
+return (str_array);
 }
 
 /**
