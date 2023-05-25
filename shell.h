@@ -25,12 +25,14 @@ typedef struct list_t
 
 
 void free_them_all(const char *fmt, int  n, int m, ...);
-void execute(char **commands);
 void sig_handler(__attribute__((unused)) int num);
+void shell(char **av);
+void print_prompt(void);
 char *readln(void);
 char **split(char *string, char *delim);
-void print_prompt(void);
-void shell(char **av);
+void execute(char **commands);
+void ignore_comment(char *line);
+void sig_handler(__attribute__((unused)) int num);
 char *_getenv(char *name);
 char *concatenate(char *str1, char *str2, char *delim);
 int filter(char *command);
