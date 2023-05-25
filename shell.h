@@ -10,11 +10,8 @@
 #include <errno.h>
 #include <stdarg.h>
 #include <limits.h>
+
 extern char **environ;
-/**
- * CU_int - Typedef for const unsigned int
-*/
-typedef const unsigned int CU_int;
 /**
  * struct list_t - single linked list to store env_var.
  * @env_var: environement variables
@@ -22,10 +19,12 @@ typedef const unsigned int CU_int;
 */
 typedef struct list_t
 {
-char *env_var;
-struct list_t *next;
+	char *env_var;
+	struct list_t *next;
 } list_t;
-void free_them_all(const char *fmt, CU_int  n, CU_int m, ...);
+
+
+void free_them_all(const char *fmt, int  n, int m, ...);
 void execute(char **commands);
 void sig_handler(__attribute__((unused)) int num);
 char *readln(void);
@@ -55,4 +54,6 @@ int _strlen(char *s);
 char *_strdup(char *str);
 char *_strcpy(char *dest, char *src);
 int _strcmp(char *s1, char *s2);
+void ignore_comment(char *line);
+
 #endif
