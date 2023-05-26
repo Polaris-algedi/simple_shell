@@ -23,6 +23,8 @@ typedef struct list_t
 	struct list_t *next;
 } list_t;
 
+extern char *string, *line;
+extern list_t *head;
 
 void free_them_all(const char *fmt, int  n, int m, ...);
 void sig_handler(__attribute__((unused)) int num);
@@ -52,10 +54,13 @@ char **SL_ListToArray(const list_t *head);
 void free_list(list_t *head);
 list_t *array_To_SLL(void);
 void non_interactive_mode_error(char **commands, char **av);
+void interactive_mode_error(char **commands);
+void command_not_found(char **commands, char **av);
 int _strlen(char *s);
 char *_strdup(char *str);
 char *_strcpy(char *dest, char *src);
 int _strcmp(char *s1, char *s2);
 void ignore_comment(char *line);
+void exit_free(long int nbr, char **commands);
 
 #endif
